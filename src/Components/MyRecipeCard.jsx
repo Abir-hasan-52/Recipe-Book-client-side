@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router";
 import Swal from "sweetalert2";
 
 const MyRecipeCard = ({ recipe }) => {
@@ -73,9 +74,11 @@ const MyRecipeCard = ({ recipe }) => {
         <div className="mt-4 flex flex-col sm:flex-row gap-3 items-center">
           <span className="text-gray-700 text-sm">❤️ Likes: {likeCount}</span>
           <div className="flex gap-3 ml-auto">
-            <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl text-sm">
-              Update
-            </button>
+            <Link to={`/updateRecipe/${_id}`}>
+              <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl text-sm">
+                Update
+              </button>
+            </Link>
             <button
               onClick={() => handleDelete(_id)}
               className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl text-sm"

@@ -1,46 +1,56 @@
-import React, { useState } from "react";
-import { Link } from "react-router";
+import { Link, useLoaderData } from "react-router";
 import Swal from "sweetalert2";
 
-const AddRecipe = () => {
-  const [likeCount, setLikeCount] = useState(0);
-
-  const handleAddRecipe = (e) => {
+const UpdateRecipe = () => {
+  const recipe = useLoaderData();
+  console.log(recipe);
+  const {
+    _id,
+    image,
+    title,
+    ingredients,
+    instructions,
+    cuisine,
+    time,
+    categories,
+  } = recipe;
+  const handleUpdateRecipe = (e) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-    const newRecipe = Object.fromEntries(formData.entries());
-    console.log(newRecipe);
-    // send recipe data to the db
-    fetch("http://localhost:3000/recipes", {
-      method: "POST",
+    const updatedRecipe = Object.fromEntries(formData.entries());
+    console.log(updatedRecipe);
+    // send updated recipe to the DB
+
+    fetch(`http://localhost:3000/recipes/${_id}`, {
+      method: "PUT",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(newRecipe),
+      body: JSON.stringify(updatedRecipe),
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.insertedId) {
+        if (data.modifiedCount) {
           Swal.fire({
-            title: "Recipe Add successfully!",
+            position: "top-end",
             icon: "success",
-            draggable: true,
+            title: "Recipe Updated Successful.",
+            showConfirmButton: false,
+            timer: 1000,
           });
-          form.reset()
         }
       });
   };
-
   return (
     <div className="w-8/12 mx-auto p-6 bg-amber-100  rounded-2xl shadow-md mt-12 ">
-      <h2 className="text-2xl font-bold mb-6 text-center">Add New Recipe</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center">Update Recipe</h2>
       <p className="text-gray-600 text-sm mb-4 text-center">
         Share your favorite recipe with the world! Fill in the details below and
         inspire others to cook something delicious.
       </p>
 
-      <form onSubmit={handleAddRecipe} className="space-y-4">
+      <form onSubmit={handleUpdateRecipe} className="space-y-4">
         <div className="grid lg:grid-cols-2 gap-4">
           {/* Image URL */}
           <div>
@@ -48,6 +58,7 @@ const AddRecipe = () => {
             <input
               type="text"
               name="image"
+              defaultValue={image}
               placeholder="Enter image URL"
               className="w-full border p-2 rounded"
             />
@@ -59,6 +70,7 @@ const AddRecipe = () => {
             <input
               type="text"
               name="title"
+              defaultValue={title}
               placeholder="Enter recipe title"
               className="w-full border p-2 rounded"
             />
@@ -69,6 +81,7 @@ const AddRecipe = () => {
             <label className="block font-medium mb-1">Ingredients</label>
             <textarea
               name="ingredients"
+              defaultValue={ingredients}
               placeholder="List ingredients"
               className="w-full border p-2 rounded"
             />
@@ -79,6 +92,7 @@ const AddRecipe = () => {
             <label className="block font-medium mb-1">Instructions</label>
             <textarea
               name="instructions"
+              defaultValue={instructions}
               placeholder="Describe preparation steps"
               className="w-full border p-2 rounded"
             />
@@ -87,7 +101,11 @@ const AddRecipe = () => {
           {/* Cuisine Type */}
           <div>
             <label className="block font-medium mb-1">Cuisine Type</label>
-            <select name="cuisine" className="w-full border p-2 rounded">
+            <select
+              name="cuisine"
+              defaultValue={cuisine}
+              className="w-full border p-2 rounded"
+            >
               <option>Italian</option>
               <option>Mexican</option>
               <option>Indian</option>
@@ -104,6 +122,7 @@ const AddRecipe = () => {
             <input
               type="number"
               name="time"
+              defaultValue={time ? parseInt(time) : ""}
               min="1"
               className="w-full border p-2 rounded"
             />
@@ -116,32 +135,34 @@ const AddRecipe = () => {
               {["Breakfast", "Lunch", "Dinner", "Dessert", "Vegan"].map(
                 (category) => (
                   <label key={category} className="flex items-center gap-2">
-                    <input type="checkbox" value={category} name="categories" />
+                    <input
+                      type="checkbox"
+                      name="categories"
+                      value={category}
+                      defaultChecked={categories.includes(category)}
+                    />
                     {category}
                   </label>
                 )
               )}
             </div>
           </div>
-
-          {/* Like Count */}
-          <div className="text-sm text-gray-600 lg:col-span-2">
-            ❤️ Like Count: {likeCount}
-          </div>
         </div>
 
         {/* Submit Button */}
-        <Link to="/MyRecipes">
-         <button
+         
+          
+          <button
           type="submit"
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-xl transition"
         >
-          Add Recipe
+          Update Recipe
         </button>
-        </Link>
+          
+        
       </form>
     </div>
   );
 };
 
-export default AddRecipe;
+export default UpdateRecipe;

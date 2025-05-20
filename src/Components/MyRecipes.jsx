@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLoaderData } from 'react-router';
+import { Link, useLoaderData } from 'react-router';
 import MyRecipeCard from './MyRecipeCard';
 
 const MyRecipes = () => {
@@ -20,6 +20,9 @@ const MyRecipes = () => {
                 recipes.map(recipe=><MyRecipeCard
                key={recipe._id} recipe={recipe}  ></MyRecipeCard>)
             }
+             </div>
+             <div className='flex justify-center items-center mb-25'>
+                <Link to='/' className='btn btn-primary'>Go to Home Page</Link>
              </div>
         </div>
     );
