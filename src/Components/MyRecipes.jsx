@@ -7,11 +7,18 @@ const MyRecipes = () => {
     console.log(recipes)
     return (
         <div>
-            MyRecipes
+             <div className='my-12'>
+                <h2 className="text-2xl font-bold mb-2 text-center">My Personal Recipe Book</h2>
+                <p className="text-gray-600 text-sm mb-6 text-center">
+  Here are all the delicious recipes you've created and saved. Manage your dishes, update ingredients, or delete the ones you no longer love. Your kitchen, your rules!
+</p>
+
+
+             </div>
              <div >
                 {
                 recipes.map(recipe=><MyRecipeCard
-               key={recipe.id} recipe={recipe}  ></MyRecipeCard>)
+               key={recipe._id} recipe={recipe}  ></MyRecipeCard>)
             }
              </div>
         </div>
