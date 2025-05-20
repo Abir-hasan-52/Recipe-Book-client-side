@@ -1,18 +1,34 @@
 import React, { useState } from "react";
+import Swal from "sweetalert2";
 
 const AddRecipe = () => {
   const [likeCount, setLikeCount] = useState(0);
 
   const handleAddRecipe = (e) => {
     e.preventDefault();
-    const image=e.target.image.value;
-    const title=e.target.title.value;
-    const ingredients=e.target.ingredients.value;
-    const instructions=e.target.instructions.value;
-    const cuisine=e.target.cuisine.value;
-    const time=e.target.time.value;
-    const categories=e.target.categories.value;
-     
+    const form = e.target;
+    const formData = new FormData(form);
+    const newRecipe = Object.fromEntries(formData.entries());
+    console.log(newRecipe);
+    // send recipe data to the db
+    fetch("http://localhost:3000/recipes", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newRecipe),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.insertedId) {
+          Swal.fire({
+            title: "Recipe Add successfully!",
+            icon: "success",
+            draggable: true,
+          });
+          form.reset()
+        }
+      });
   };
 
   return (
