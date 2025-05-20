@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
 
-const MyRecipeCard = ({ recipe }) => {
+const MyRecipeCard = ({ recipe,setRecipes,recipes }) => {
   const [likeCount, setLikeCount] = useState(recipe.likeCount || 0);
   const { _id, image, title, cuisine, time, ingredients, instructions } =
     recipe;
@@ -32,6 +32,9 @@ const MyRecipeCard = ({ recipe }) => {
                 text: "Your recipe has been deleted.",
                 icon: "success",
               });
+
+              const remainingRecipes=recipes.filter(recip=>recip._id!==_id);
+              setRecipes(remainingRecipes);
             }
           });
       }

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLoaderData } from 'react-router';
 import MyRecipeCard from './MyRecipeCard';
 
 const MyRecipes = () => {
-    const recipes=useLoaderData();
-    console.log(recipes)
+    const initialRecipes=useLoaderData();
+    const [recipes,setRecipes]=useState(initialRecipes)
+    console.log(initialRecipes)
     return (
         <div>
              <div className='my-12'>
@@ -18,7 +19,11 @@ const MyRecipes = () => {
              <div >
                 {
                 recipes.map(recipe=><MyRecipeCard
-               key={recipe._id} recipe={recipe}  ></MyRecipeCard>)
+               key={recipe._id}
+               recipes={recipes}
+                    setRecipes={setRecipes}
+                recipe={recipe} 
+                 ></MyRecipeCard>)
             }
              </div>
              <div className='flex justify-center items-center mb-25'>
