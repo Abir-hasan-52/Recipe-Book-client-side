@@ -20,10 +20,12 @@ const router= createBrowserRouter([
       },
       {
         path:'addRecipe',
+        loader:()=>fetch('http://localhost:3000/recipes'),
         Component:AddRecipe,
       },
       {
         path:'MyRecipes',
+        loader:()=>fetch('http://localhost:3000/recipes'),
         Component:MyRecipes,
       },
     ]
