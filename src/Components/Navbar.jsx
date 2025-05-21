@@ -14,6 +14,49 @@ const Navbar = () => {
     setTheme(theme === "light" ? "synthwave" : "light");
   };
 
+  const links = [
+    <li>
+      <NavLink
+        to="/"
+        className={({ isActive }) =>
+          isActive ? "text-blue-500 font-bold" : "text-gray-700"
+        }
+      >
+        Home
+      </NavLink>
+    </li>,
+    <li>
+      <NavLink
+        to="/AllRecipes"
+        className={({ isActive }) =>
+          isActive ? "text-blue-500 font-bold" : "text-gray-700"
+        }
+      >
+        ALL- Recipe
+      </NavLink>
+    </li>,
+    <li>
+      <NavLink
+        to="/addRecipe"
+        className={({ isActive }) =>
+          isActive ? "text-blue-500 font-bold" : "text-gray-700"
+        }
+      >
+        Add Recipe
+      </NavLink>
+    </li>,
+    <li>
+      <NavLink
+        to="/myRecipes"
+        className={({ isActive }) =>
+          isActive ? "text-blue-500 font-bold" : "text-gray-700"
+        }
+      >
+        My Recipes
+      </NavLink>
+    </li>,
+  ];
+
   return (
     <div>
       <div className="navbar bg-base-100 p-0 shadow-sm">
@@ -39,36 +82,7 @@ const Navbar = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
-              <li>
-                <NavLink
-                  to="/"
-                  className={({ isActive }) =>
-                    isActive ? "text-blue-500 font-bold" : "text-gray-700"
-                  }
-                >
-                  Home
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/addRecipe"
-                  className={({ isActive }) =>
-                    isActive ? "text-blue-500 font-bold" : "text-gray-700"
-                  }
-                >
-                  Add Recipe
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/myRecipes"
-                  className={({ isActive }) =>
-                    isActive ? "text-blue-500 font-bold" : "text-gray-700"
-                  }
-                >
-                  My Recipes
-                </NavLink>
-              </li>
+              {links}
             </ul>
           </div>
           <a className="btn btn-ghost text-xl">
@@ -78,38 +92,7 @@ const Navbar = () => {
         </div>
 
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
-            <li>
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  isActive ? "text-blue-500 font-bold" : "text-gray-700"
-                }
-              >
-                Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/addRecipe"
-                className={({ isActive }) =>
-                  isActive ? "text-blue-500 font-bold" : "text-gray-700"
-                }
-              >
-                Add Recipe
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/myRecipes"
-                className={({ isActive }) =>
-                  isActive ? "text-blue-500 font-bold" : "text-gray-700"
-                }
-              >
-                My Recipes
-              </NavLink>
-            </li>
-          </ul>
+          <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
 
         <div className="navbar-end flex pr-4">
