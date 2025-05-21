@@ -1,9 +1,13 @@
 import React from 'react';
+ 
+import TopRecipes from './TopRecipes';
 
 const Home = () => {
+     
     return (
+        
         <div>
-            Home
+             <TopRecipes></TopRecipes>
         </div>
     );
 };

@@ -8,6 +8,8 @@ import Home from "./Components/Home.jsx";
 import AddRecipe from "./Components/AddRecipe.jsx";
 import MyRecipes from "./Components/MyRecipes.jsx";
 import UpdateRecipe from "./Components/UpdateRecipe.jsx";
+import TopRecipes from "./Components/TopRecipes.jsx";
+import AllRecipes from "./Components/AllRecipes.jsx";
 
 const router = createBrowserRouter([
   {
@@ -16,7 +18,9 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
+        // loader:()=>fetch("http://localhost:3000/recipes/top"),
         Component: Home,
+         
       },
       {
         path: "addRecipe",
@@ -34,6 +38,15 @@ const router = createBrowserRouter([
         loader: () => fetch("http://localhost:3000/recipes"),
         Component: MyRecipes,
       },
+      {
+        path:"topRecipes",
+        loader:()=>fetch("http://localhost:3000/recipes/top"),
+        Component:TopRecipes,
+      },
+      {
+        path:"AllRecipes",
+        Component:AllRecipes,
+      }
     ],
   },
 ]);
