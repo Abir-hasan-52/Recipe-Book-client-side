@@ -10,6 +10,9 @@ import MyRecipes from "./Components/MyRecipes.jsx";
 import UpdateRecipe from "./Components/UpdateRecipe.jsx";
 import TopRecipes from "./Components/TopRecipes.jsx";
 import AllRecipes from "./Components/AllRecipes.jsx";
+import Signin from "./Components/Signin.jsx";
+import SignUp from "./Components/SignUp.jsx";
+import AuthProvider from "./Contexts/AuthProvider.jsx";
 
 const router = createBrowserRouter([
   {
@@ -47,12 +50,23 @@ const router = createBrowserRouter([
         loader: () => fetch("http://localhost:3000/recipes/AllRecipes"),
         Component: AllRecipes,
       },
+      {
+        path: "signin",
+        Component: Signin,
+      },
+      {
+        path: "Signup",
+        Component: SignUp,
+      },
     ],
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router}></RouterProvider>
+    <AuthProvider>
+      
+      <RouterProvider router={router}></RouterProvider>
+    </AuthProvider>
   </StrictMode>
 );

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import logo from "../assets/logo-transparent.png";
-import { NavLink } from "react-router"; // 🛠️ fixed router import
+import { Link, NavLink } from "react-router"; // 🛠️ fixed router import
 import { MdNightlight } from "react-icons/md";
 
 const Navbar = () => {
@@ -96,7 +96,7 @@ const Navbar = () => {
         </div>
 
         <div className="navbar-end flex pr-4">
-          <a className="btn mr-2">Login</a>
+          <Link to='/signin' className="btn mr-2">Login</Link>
           <div>
             <label className="swap swap-rotate">
               <input
