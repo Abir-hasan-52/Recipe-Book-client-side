@@ -1,9 +1,10 @@
 import React from "react";
+import { Link } from "react-router";
 
 const Hero = () => {
   return (
     <div className="carousel w-full rounded-xl overflow-hidden shadow-2xl">
-      
+
       {/* Slide 1 */}
       <div id="slide1" className="carousel-item relative w-full">
         <img
@@ -15,9 +16,9 @@ const Hero = () => {
           <p className="max-w-lg text-lg mb-4">
             Explore a world of flavors with our mouth-watering beef tacos!
           </p>
-          <a href="#recipes" className="btn btn-primary px-6">
+          <Link to="recipe" className="btn btn-primary px-6">
             View Recipes
-          </a>
+          </Link>
         </div>
         <div className="absolute left-5 right-5 top-1/2 transform -translate-y-1/2 flex justify-between">
           <a

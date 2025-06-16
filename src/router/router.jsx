@@ -10,11 +10,13 @@ import AllRecipes from "../Components/AllRecipes";
 import Signin from "../Components/Signin";
 import SignUp from "../Components/SignUp";
 import RecipeDetails from "../Components/RecipeDetails";
+import ErrorPage from "../Components/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     Component: MainLayOut,
+    errorElement:<ErrorPage></ErrorPage>,
     children: [
       {
         index: true,
@@ -61,6 +63,7 @@ const router = createBrowserRouter([
         Component: SignUp,
       },
     ],
+     
   },
 ]);
 
