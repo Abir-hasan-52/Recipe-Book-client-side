@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, use } from "react";
 import logo from "../assets/logo-transparent.png";
 import { Link, NavLink } from "react-router"; // 🛠️ react-router-dom import
 import { MdNightlight } from "react-icons/md";
@@ -6,7 +6,7 @@ import { AuthContext } from "../Contexts/AuthContext"; // AuthContext import
 
 const Navbar = () => {
   const [theme, setTheme] = useState("light");
-  const { user, logOut } = useContext(AuthContext); // user & logOut from context
+  const { user, signOutUser } = use(AuthContext); // user & logOut from context
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -15,9 +15,15 @@ const Navbar = () => {
   const toggleTheme = () => {
     setTheme(theme === "light" ? "synthwave" : "light");
   };
-//   const logOut=()=>{
-
-//   }
+  const handleSignOut=()=>{
+    signOutUser()
+    .then(()=>{
+      console.log("User signed out successfully");
+    })
+    .catch((error) => {
+      console.error("Error signing out:", error);
+    });
+  }
 
   const links = [
     <li>
@@ -102,9 +108,18 @@ const Navbar = () => {
 
         <div className="navbar-end flex pr-4">
           {user ? (
-            <Link onClick={logOut} className="btn mr-2">Logout</Link>
+            <Link onClick={handleSignOut} className="btn mr-2">
+              Logout
+            </Link>
           ) : (
-            <Link to='/signin' className="btn mr-2">Login</Link>
+            <>
+              <Link to="/signin" className="btn mr-2">
+                Login
+              </Link>
+              <Link to="/signin" className="btn mr-2">
+                Sign Up
+              </Link>
+            </>
           )}
           <div>
             <label className="swap swap-rotate">
