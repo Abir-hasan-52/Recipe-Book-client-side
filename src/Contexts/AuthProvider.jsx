@@ -22,11 +22,11 @@ const userInfo={
     signInWithGoogle,
 }
 
-    return (
+  return (
          <AuthContext value={userInfo}>
-            {children}
+      {children}
          </AuthContext>
-    );
+  );
 };
 
 export default AuthProvider;

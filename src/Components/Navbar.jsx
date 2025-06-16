@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import logo from "../assets/logo-transparent.png";
-import { Link, NavLink } from "react-router"; // 🛠️ fixed router import
+import { Link, NavLink } from "react-router"; // 🛠️ react-router-dom import
 import { MdNightlight } from "react-icons/md";
+import { AuthContext } from "../Contexts/AuthContext"; // AuthContext import
 
 const Navbar = () => {
   const [theme, setTheme] = useState("light");
+  const { user, logOut } = useContext(AuthContext); // user & logOut from context
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -13,6 +15,9 @@ const Navbar = () => {
   const toggleTheme = () => {
     setTheme(theme === "light" ? "synthwave" : "light");
   };
+//   const logOut=()=>{
+
+//   }
 
   const links = [
     <li>
@@ -96,7 +101,11 @@ const Navbar = () => {
         </div>
 
         <div className="navbar-end flex pr-4">
-          <Link to='/signin' className="btn mr-2">Login</Link>
+          {user ? (
+            <Link onClick={logOut} className="btn mr-2">Logout</Link>
+          ) : (
+            <Link to='/signin' className="btn mr-2">Login</Link>
+          )}
           <div>
             <label className="swap swap-rotate">
               <input
