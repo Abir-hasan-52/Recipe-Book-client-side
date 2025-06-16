@@ -29,7 +29,7 @@ const AllRecipes = () => {
             <p className="text-gray-600">Cuisine: {recipe.cuisineType}</p>
             <p className="text-gray-600">Likes: {recipe.likeCount}</p>
 
-            <Link to={`/recipe/${recipe._id}`}>
+            <Link to={`/AllRecipes/${recipe._id}`}>
               <button className="mt-3 bg-blue-500 hover:bg-blue-600 text-white py-1 px-4 rounded">
                 See Details
               </button>

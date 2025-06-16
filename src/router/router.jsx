@@ -1,4 +1,4 @@
-import { createBrowserRouter,   } from "react-router";
+import { createBrowserRouter } from "react-router";
 // import AuthProvider from "./Contexts/AuthProvider.jsx";
 import MainLayOut from "../LayOuts/MainLayOut";
 import AddRecipe from "../Components/AddRecipe";
@@ -9,8 +9,8 @@ import TopRecipes from "../Components/TopRecipes";
 import AllRecipes from "../Components/AllRecipes";
 import Signin from "../Components/Signin";
 import SignUp from "../Components/SignUp";
- 
- 
+import RecipeDetails from "../Components/RecipeDetails";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -18,7 +18,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        
+
         Component: Home,
       },
       {
@@ -48,6 +48,11 @@ const router = createBrowserRouter([
         Component: AllRecipes,
       },
       {
+        path: "AllRecipes/:id",
+        loader:({params})=>fetch(`http://localhost:3000/recipes/AllRecipes/${params.id}`),
+        Component:RecipeDetails,
+      },
+      {
         path: "signin",
         Component: Signin,
       },
@@ -58,6 +63,5 @@ const router = createBrowserRouter([
     ],
   },
 ]);
-
 
 export default router;

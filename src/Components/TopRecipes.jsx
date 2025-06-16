@@ -17,7 +17,7 @@ const TopRecipes = () => {
             <h2 className="text-xl font-bold">{recipe.title}</h2>
             <p>Cuisine: {recipe.cuisineType}</p>
             <p>Likes: {recipe.likeCount}</p>
-            <Link to={`/recipe/${recipe._id}`}>
+            <Link to={`/AllRecipes/${recipe._id}`}>
               <button className="btn btn-primary mt-2">View Details</button>
             </Link>
           </div>
