@@ -7,6 +7,9 @@ const Home = () => {
   return (
     <div>
       <section className="my-4">
+        <h1 className="text-5xl text-center font-bold mt-10">Welcome to Recipe World</h1>
+        <p className="text-center mt-8 text-gray-500 pb-5">
+          Discover, create, and share your favorite recipes with the world.</p>
         <Hero></Hero>
       </section>
       <section>
