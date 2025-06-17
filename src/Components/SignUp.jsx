@@ -1,25 +1,40 @@
-import React, { use } from "react";
+import React, { useState, useContext } from "react";
 import { AuthContext } from "../Contexts/AuthContext";
 import Swal from "sweetalert2";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router"; 
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const { createUser } = use(AuthContext);
-  console.log(createUser);
+  const { createUser, signInWithGoogle } = useContext(AuthContext);
+  const [passwordError, setPasswordError] = useState("");
 
   const handleSignUp = (e) => {
     e.preventDefault();
+    setPasswordError("");  
     const form = e.target;
     const formData = new FormData(form);
     const { email, password, ...restFormData } = Object.fromEntries(
       formData.entries()
     );
 
-    // create user in the firebase
+     
+    if (!/[A-Z]/.test(password)) {
+      setPasswordError("Password must have at least one uppercase letter.");
+      return;
+    }
+    if (!/[a-z]/.test(password)) {
+      setPasswordError("Password must have at least one lowercase letter.");
+      return;
+    }
+    if (password.length < 6) {
+      setPasswordError("Password must be at least 6 characters long.");
+      return;
+    }
+
+     
     createUser(email, password)
       .then((result) => {
-        // Signed up
+        
         const userProfile = {
           email,
           ...restFormData,
@@ -27,7 +42,7 @@ const SignUp = () => {
           lastSignInTime: result.user?.metadata?.lastSignInTime,
         };
 
-        // save profile info in the db
+        
         fetch("http://localhost:3000/users", {
           method: "POST",
           headers: {
@@ -45,14 +60,31 @@ const SignUp = () => {
                 showConfirmButton: false,
                 timer: 1500,
               });
-              navigate("/"); // signup successful hole home page a navigate
+              navigate("/");
             }
           });
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
+         
         console.log(errorCode);
+      });
+  };
+
+  const handleWithGoogl = () => {
+    signInWithGoogle()
+      .then((result) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Login successFull ",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 
@@ -96,16 +128,29 @@ const SignUp = () => {
             className="input"
             placeholder="Password"
           />
+          {/* Password error message */}
+          {passwordError && (
+            <p className="text-red-500 text-sm mt-2">{passwordError}</p>
+          )}
 
           <button className="btn btn-neutral mt-4">SignUp</button>
           <div>
             <p className="link text-md link-hover">
-              Have an Account? 
-             <Link className="text-yellow-600 " to="/signin">
-                 
+              Have an Account?
+              <Link className="text-yellow-600 " to="/signin">
                 LogIn
               </Link>
             </p>
+          </div>
+          <div>
+            <p className="text-2xl text-center font-bold text-cyan-400">or</p>
+            <button
+              onClick={handleWithGoogl}
+              className="btn btn-primary w-full mt-4"
+              type="button"
+            >
+              signIn with Google
+            </button>
           </div>
         </form>
       </div>
