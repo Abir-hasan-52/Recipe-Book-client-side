@@ -16,12 +16,14 @@ const router = createBrowserRouter([
   {
     path: "/",
     Component: MainLayOut,
-    errorElement:<ErrorPage></ErrorPage>,
     children: [
       {
         index: true,
-
         Component: Home,
+      },
+      {
+        path: "*",
+        element: <ErrorPage />,
       },
       {
         path: "addRecipe",
@@ -51,8 +53,9 @@ const router = createBrowserRouter([
       },
       {
         path: "AllRecipes/:id",
-        loader:({params})=>fetch(`http://localhost:3000/recipes/AllRecipes/${params.id}`),
-        Component:RecipeDetails,
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/recipes/AllRecipes/${params.id}`),
+        Component: RecipeDetails,
       },
       {
         path: "signin",
@@ -63,7 +66,10 @@ const router = createBrowserRouter([
         Component: SignUp,
       },
     ],
-     
+  },
+  {
+    path: "*",
+    element: <ErrorPage />,
   },
 ]);
 
