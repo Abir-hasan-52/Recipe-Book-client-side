@@ -11,6 +11,7 @@ import Signin from "../Components/Signin";
 import SignUp from "../Components/SignUp";
 import RecipeDetails from "../Components/RecipeDetails";
 import ErrorPage from "../Components/ErrorPage";
+import PrivateRoute from "../routes/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +29,9 @@ const router = createBrowserRouter([
       {
         path: "addRecipe",
         loader: () => fetch("http://localhost:3000/recipes"),
-        Component: AddRecipe,
+         element: <PrivateRoute>
+          <AddRecipe />
+         </PrivateRoute>,
       },
       {
         path: "updateRecipe/:id",
@@ -39,7 +42,9 @@ const router = createBrowserRouter([
       {
         path: "MyRecipes",
         loader: () => fetch("http://localhost:3000/recipes"),
-        Component: MyRecipes,
+        element:  <PrivateRoute>
+          <MyRecipes />
+        </PrivateRoute>,
       },
       {
         path: "topRecipes",
@@ -55,7 +60,9 @@ const router = createBrowserRouter([
         path: "AllRecipes/:id",
         loader: ({ params }) =>
           fetch(`http://localhost:3000/recipes/AllRecipes/${params.id}`),
-        Component: RecipeDetails,
+        element:<PrivateRoute>
+          <RecipeDetails />
+        </PrivateRoute> ,
       },
       {
         path: "signin",

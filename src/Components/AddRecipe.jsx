@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import Swal from "sweetalert2";
+import { AuthContext } from "../Contexts/AuthContext";
 
 const AddRecipe = () => {
+  const { user } = use(AuthContext);  
   const [likeCount, setLikeCount] = useState(0);
 
   const handleAddRecipe = (e) => {
@@ -10,9 +12,11 @@ const AddRecipe = () => {
     const formData = new FormData(form);
     const newRecipe = Object.fromEntries(formData.entries());
 
-    // Handle checkbox array (categories)
     newRecipe.categories = formData.getAll("categories");
     newRecipe.likeCount = likeCount;
+
+    
+    newRecipe.ownerId = user?.uid;
 
     fetch("http://localhost:3000/recipes", {
       method: "POST",
@@ -33,6 +37,7 @@ const AddRecipe = () => {
         }
       });
   };
+
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-10 mt-12 bg-gradient-to-br from-orange-100 to-yellow-50 shadow-xl rounded-3xl">

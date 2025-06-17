@@ -1,11 +1,17 @@
 import React, { use } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../Contexts/AuthContext";
 import Swal from "sweetalert2";
 
 const Signin = () => {
   const { signIn, signInWithGoogle } = use(AuthContext);
-  const navigate = useNavigate();
+  const location =useLocation();
+  const navigate= useNavigate();
+  console.log(location);
+
+
+  const from = location.state || '/';
+   
   const handleSignIn = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -21,7 +27,7 @@ const Signin = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate("/");
+        navigate(from);
       })
       .catch((error) => {
         console.log(error);

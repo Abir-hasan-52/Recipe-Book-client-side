@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState, use } from "react";
 import { Link, useLoaderData } from "react-router";
 import { FaRegClock, FaHeart } from "react-icons/fa";
+import { AuthContext } from "../Contexts/AuthContext";
 
 const RecipeDetails = () => {
   const recipe = useLoaderData();
-
   const {
     title,
     image,
@@ -14,10 +14,46 @@ const RecipeDetails = () => {
     preparationTime,
     categories,
     likeCount,
+    ownerId,
+    _id,
   } = recipe;
+
+  const { user } = use(AuthContext);
+
+  // Like count state
+  const [likes, setLikes] = useState(likeCount || 0);
+  const isOwnRecipe = user?.uid && ownerId === user.uid;
+
+  // Convert ingredients and instructions to arrays if they are strings
+  const ingredientsArray =
+    typeof ingredients === "string"
+      ? ingredients
+          .split(",")
+          .map((item) => item.trim())
+          .filter(Boolean)
+      : ingredients || [];
+
+  const instructionsArray =
+    typeof instructions === "string"
+      ? instructions
+          .split(",")
+          .map((step) => step.trim())
+          .filter(Boolean)
+      : instructions || [];
+
+  const handleLike = async () => {
+    if (isOwnRecipe) return;
+    // Optional: Backend update
+    setLikes((prev) => prev + 1);
+    // await fetch(`http://localhost:3000/recipes/${_id}/like`, { method: "PUT" });
+  };
 
   return (
     <div className="max-w-5xl mx-auto p-6 bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 rounded-2xl shadow-lg mt-10">
+      {/* Interested People */}
+      <div className="text-xl font-semibold text-center text-pink-700 mb-2">
+        {likes} people interested in this recipe
+      </div>
       <h2 className="text-3xl font-bold text-center text-purple-800 mb-4">
         {title}
       </h2>
@@ -34,7 +70,7 @@ const RecipeDetails = () => {
             🧂 Ingredients
           </h3>
           <ul className="list-disc list-inside space-y-1">
-            {ingredients?.map((item, idx) => (
+            {ingredientsArray.map((item, idx) => (
               <li key={idx}>{item}</li>
             ))}
           </ul>
@@ -46,7 +82,7 @@ const RecipeDetails = () => {
             📋 Instructions
           </h3>
           <ol className="list-decimal list-inside space-y-1">
-            {instructions?.map((step, idx) => (
+            {instructionsArray.map((step, idx) => (
               <li key={idx}>{step}</li>
             ))}
           </ol>
@@ -72,11 +108,21 @@ const RecipeDetails = () => {
             </span>
           ))}
         </span>
-        {likeCount !== undefined && (
-          <span className="flex items-center gap-2 text-pink-600 font-semibold">
-            <FaHeart className="text-red-500" /> {likeCount} Likes
-          </span>
-        )}
+        <span
+          onClick={isOwnRecipe ? undefined : handleLike}
+          className={`flex items-center gap-2 font-semibold cursor-pointer ${
+            isOwnRecipe
+              ? "text-gray-400 cursor-not-allowed"
+              : "text-pink-600 hover:text-pink-800"
+          }`}
+          title={
+            isOwnRecipe
+              ? "You can't like your own recipe"
+              : "Like this recipe"
+          }
+        >
+          <FaHeart className="text-red-500" /> {likes} Likes
+        </span>
       </div>
       <div>
         <Link className="block text-center mt-6" to="/AllRecipes">
