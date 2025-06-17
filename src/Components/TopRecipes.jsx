@@ -22,6 +22,13 @@ const TopRecipes = () => {
             </Link>
           </div>
         ))}
+        <div className="col-span-3 text-center">
+          <h2 className="text-2xl font-bold text-center mt-6">
+            Explore More Delicious Recipes</h2>
+          <Link to="/AllRecipes">
+            <button className="btn btn-secondary mt-4">See All Recipes</button>
+          </Link>
+        </div>
       </div>
     </div>
   );
