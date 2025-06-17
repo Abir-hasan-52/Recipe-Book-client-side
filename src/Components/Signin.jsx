@@ -2,6 +2,8 @@ import React, { use } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../Contexts/AuthContext";
 import Swal from "sweetalert2";
+import lottieLogin from "../assets/lottie/login.json";
+import Lottie from "lottie-react";
 
 const Signin = () => {
   const { signIn, signInWithGoogle } = use(AuthContext);
@@ -52,8 +54,8 @@ const Signin = () => {
       });
   };
   return (
-    <div>
-      <div className="card bg-base-100 flex justify-center items-center  mx-auto max-w-sm shrink-0 shadow-2xl">
+    <div className="flex justify-center items-center gap-4 my-10">
+      <div className=" card bg-base-100 flex  col mx-auto max-w-sm shrink-0 shadow-2xl">
         <div className="card-body">
           <h1 className="text-5xl font-bold">Sign In now!</h1>
           <form onSubmit={handleSignIn} className="fieldset">
@@ -95,7 +97,13 @@ const Signin = () => {
             </div>
           </form>
         </div>
+         
       </div>
+      <div>
+          <Lottie animationData={lottieLogin} loop={true} className="w-96">
+
+          </Lottie>
+        </div>
     </div>
   );
 };
