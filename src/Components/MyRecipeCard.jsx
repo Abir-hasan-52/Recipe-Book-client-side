@@ -4,6 +4,12 @@ import Swal from "sweetalert2";
 
 const MyRecipeCard = ({ recipe,setRecipes,recipes }) => {
   const [likeCount, setLikeCount] = useState(recipe.likeCount || 0);
+  const [myRecipes, setMyRecipes]=useState([]);
+  fetch("http://localhost:3000/recipes/myRecipe")
+    .then((res) => res.json())
+    .then((data) => {
+      setMyRecipes(data);
+    });
   const { _id, image, title, cuisine, time, ingredients, instructions } =
     recipe;
   const handleDelete = (_id) => {

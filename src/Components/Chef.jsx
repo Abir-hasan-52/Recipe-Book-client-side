@@ -9,11 +9,11 @@ const Chef = () => {
         <img
           src="https://i.ibb.co/Z1d9n9f0/shutterstock-1518533924-min.jpg"
           alt="Chef Abir"
-          className="w-40 h-40 md:w-56 md:h-56 rounded-full object-cover border-4 border-orange-300"
+          className="w-40 h-40 md:w-56 md:h-56 rounded-full object-cover border-4 border-cyan-300"
         />
 
         <div>
-          <h2 className="text-3xl font-bold text-orange-600 mb-2">
+          <h2 className="text-3xl font-bold  text-cyan-600 mb-2">
             Chef Abir Hasan Mahmud
           </h2>
           <p className="text-sm text-gray-500 mb-4">Home Cook | Food Lover | Recipe Creator</p>
@@ -26,7 +26,7 @@ const Chef = () => {
             His goal is simple: make delicious food accessible to all. Whether you’re a first-time cook or someone rediscovering the kitchen, Abir’s recipes are designed to inspire and excite.
           </p>
 
-          <blockquote className="italic text-orange-500 border-l-4 border-orange-300 pl-4">
+          <blockquote className="italic  text-cyan-500 border-l-4 border-cyan-300 pl-4">
             “Cooking is not just about ingredients and recipes — it's about sharing stories, culture, and joy through every dish.”
           </blockquote>
         </div>

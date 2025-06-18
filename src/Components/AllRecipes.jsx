@@ -3,19 +3,58 @@ import { Link } from 'react-router';
 
 const AllRecipes = () => {
   const [recipes, setRecipes] = useState([]);
+  const [selectedCuisine, setSelectedCuisine] = useState('All');
+  const [filteredRecipes, setFilteredRecipes] = useState([]);
 
+  // Fetch recipes
   useEffect(() => {
     fetch("http://localhost:3000/recipes/AllRecipes")
       .then((res) => res.json())
-      .then((data) => setRecipes(data))
+      .then((data) => {
+        setRecipes(data);
+        setFilteredRecipes(data);
+      })
       .catch((err) => console.error(err));
   }, []);
+
+  // Update filtered recipes when cuisine changes
+  useEffect(() => {
+    if (selectedCuisine === 'All') {
+      setFilteredRecipes(recipes);
+    } else {
+      const filtered = recipes.filter(
+        (recipe) => recipe.cuisineType === selectedCuisine
+      );
+      setFilteredRecipes(filtered);
+    }
+  }, [selectedCuisine, recipes]);
+
+  // Extract unique cuisine types
+  const cuisineTypes = ['All', ...new Set(recipes.map((r) => r.cuisineType))];
 
   return (
     <div className="p-5">
       <h2 className="text-3xl font-bold text-center mb-6">All Recipes</h2>
+
+      {/* Dropdown Filter */}
+      <div className="mb-6 text-center">
+        <label className="mr-2 font-semibold">Filter by Cuisine:</label>
+        <select
+          value={selectedCuisine}
+          onChange={(e) => setSelectedCuisine(e.target.value)}
+          className="px-3 py-1 border rounded-md"
+        >
+          {cuisineTypes.map((type) => (
+            <option key={type} value={type}>
+              {type}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Recipes Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {recipes.map((recipe) => (
+        {filteredRecipes.map((recipe) => (
           <div
             key={recipe._id}
             className="bg-white rounded-xl shadow-md p-4 flex flex-col justify-between"

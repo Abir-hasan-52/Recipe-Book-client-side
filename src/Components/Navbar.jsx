@@ -1,12 +1,12 @@
-import React, { useEffect, useState, use } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import logo from "../assets/logo-transparent.png";
-import { Link, NavLink } from "react-router"; // 🛠️ react-router-dom import
+import { Link, NavLink } from "react-router"; // fixed import
 import { MdNightlight } from "react-icons/md";
-import { AuthContext } from "../Contexts/AuthContext"; // AuthContext import
+import { AuthContext } from "../Contexts/AuthContext";
 
 const Navbar = () => {
   const [theme, setTheme] = useState("light");
-  const { user, signOutUser } = use(AuthContext); // user & logOut from context
+  const { user, signOutUser } = useContext(AuthContext); // fixed useContext
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -15,18 +15,19 @@ const Navbar = () => {
   const toggleTheme = () => {
     setTheme(theme === "light" ? "synthwave" : "light");
   };
-  const handleSignOut=()=>{
+
+  const handleSignOut = () => {
     signOutUser()
-    .then(()=>{
-      console.log("User signed out successfully");
-    })
-    .catch((error) => {
-      console.error("Error signing out:", error);
-    });
-  }
+      .then(() => {
+        console.log("User signed out successfully");
+      })
+      .catch((error) => {
+        console.error("Error signing out:", error);
+      });
+  };
 
   const links = [
-    <li>
+    <li key="home">
       <NavLink
         to="/"
         className={({ isActive }) =>
@@ -36,7 +37,7 @@ const Navbar = () => {
         Home
       </NavLink>
     </li>,
-    <li>
+    <li key="all">
       <NavLink
         to="/AllRecipes"
         className={({ isActive }) =>
@@ -46,7 +47,7 @@ const Navbar = () => {
         ALL- Recipe
       </NavLink>
     </li>,
-    <li>
+    <li key="add">
       <NavLink
         to="/addRecipe"
         className={({ isActive }) =>
@@ -56,7 +57,7 @@ const Navbar = () => {
         Add Recipe
       </NavLink>
     </li>,
-    <li>
+    <li key="my">
       <NavLink
         to="/myRecipes"
         className={({ isActive }) =>
@@ -67,6 +68,9 @@ const Navbar = () => {
       </NavLink>
     </li>,
   ];
+
+  // Dropdown state for avatar
+  const [showDropdown, setShowDropdown] = useState(false);
 
   return (
     <div>
@@ -106,20 +110,45 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
 
-        <div className="navbar-end flex pr-4">
-          {user ? (
-            <Link onClick={handleSignOut} className="btn mr-2">
-              Logout
-            </Link>
-          ) : (
+        <div className="navbar-end flex gap-2 pr-4">
+          {!user ? (
             <>
               <Link to="/signin" className="btn mr-2">
                 Login
               </Link>
-              <Link to="/Signup" className="btn mr-2">
-                Sign Up
+              <Link to="/signup" className="btn mr-2">
+                Register
               </Link>
             </>
+          ) : (
+            <div className="relative">
+              <img
+                src={
+                  user.photoURL ||
+                  "https://img.daisyui.com/images/profile/demo/yellingcat@192.webp"
+                }
+                className="w-8 h-8 rounded-full cursor-pointer border-2 border-blue-400"
+                onClick={() => setShowDropdown((prev) => !prev)}
+                alt="user"
+              />
+
+              {showDropdown && (
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-10 p-4">
+                  <div className="mb-2 text-gray-800 font-semibold text-center">
+                    {user.displayName}
+                  </div>
+                  <button
+                    onClick={() => {
+                      handleSignOut();
+                      setShowDropdown(false);
+                    }}
+                    className="btn btn-error w-full"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
           )}
           <div>
             <label className="swap swap-rotate">
@@ -128,7 +157,6 @@ const Navbar = () => {
                 onChange={toggleTheme}
                 checked={theme === "synthwave"}
               />
-
               {/* sun icon */}
               <svg
                 className="swap-off h-10 w-10 fill-current"
@@ -137,7 +165,6 @@ const Navbar = () => {
               >
                 <path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z" />
               </svg>
-
               {/* moon icon */}
               <svg
                 className="swap-on h-10 w-10 fill-current"

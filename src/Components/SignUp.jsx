@@ -1,24 +1,33 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../Contexts/AuthContext";
 import Swal from "sweetalert2";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import lottieRegister from "../assets/lottie/register.json";
 import Lottie from "lottie-react";
+import { updateProfile } from "firebase/auth";
 
 const SignUp = () => {
-  const navigate = useNavigate();
+   
   const { createUser, signInWithGoogle } = useContext(AuthContext);
   const [passwordError, setPasswordError] = useState("");
+   const location =useLocation();
+    const navigate= useNavigate();
+    console.log(location);
+  
+  
+    const from = location.state || '/';
 
   const handleSignUp = (e) => {
     e.preventDefault();
     setPasswordError("");
+
     const form = e.target;
     const formData = new FormData(form);
-    const { email, password, ...restFormData } = Object.fromEntries(
+    const { email, password, name, photo, contact } = Object.fromEntries(
       formData.entries()
     );
 
+    // password validations
     if (!/[A-Z]/.test(password)) {
       setPasswordError("Password must have at least one uppercase letter.");
       return;
@@ -32,57 +41,71 @@ const SignUp = () => {
       return;
     }
 
+    // create user
     createUser(email, password)
       .then((result) => {
-        const userProfile = {
-          email,
-          ...restFormData,
-          creationTime: result.user?.metadata?.creationTime,
-          lastSignInTime: result.user?.metadata?.lastSignInTime,
-        };
+        const createdUser = result.user;
 
-        fetch("http://localhost:3000/users", {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(userProfile),
+        
+        updateProfile(createdUser, {
+          displayName: name,
+          photoURL: photo || "https://i.ibb.co/Yty7Kf5/default-avatar.png",
         })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.insertedId) {
-              Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: "Your Profile saved",
-                showConfirmButton: false,
-                timer: 1500,
+          .then(() => {
+             
+            const userProfile = {
+              name,
+              photo,
+              email,
+              contact,
+              creationTime: createdUser.metadata?.creationTime,
+              lastSignInTime: createdUser.metadata?.lastSignInTime,
+            };
+
+            fetch("http://localhost:3000/users", {
+              method: "POST",
+              headers: {
+                "content-type": "application/json",
+              },
+              body: JSON.stringify(userProfile),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                if (data.insertedId) {
+                  Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Your Profile saved",
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
+                  navigate(from);
+                }
               });
-              navigate("/");
-            }
+          })
+          .catch((error) => {
+            console.error("Error updating profile:", error);
           });
       })
       .catch((error) => {
-        const errorCode = error.code;
-
-        console.log(errorCode);
+        console.error("Signup error:", error);
       });
   };
 
   const handleWithGoogl = () => {
     signInWithGoogle()
-      .then((result) => {
+      .then(() => {
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "Login successFull ",
+          title: "Login successful",
           showConfirmButton: false,
           timer: 1500,
         });
         navigate("/");
       })
       .catch((error) => {
-        console.log(error);
+        console.error("Google SignIn error:", error);
       });
   };
 
@@ -91,7 +114,7 @@ const SignUp = () => {
       <div className="card bg-base-100 flex justify-center items-center  mx-auto max-w-sm shrink-0 shadow-2xl">
         <div className="card-body">
           <h1 className="text-5xl font-bold">Sign Up now!</h1>
-          <form onSubmit={handleSignUp} className="fieldset">
+          <form onSubmit={handleSignUp}>
             {/* name */}
             <label className="label">Name</label>
             <input
@@ -99,6 +122,7 @@ const SignUp = () => {
               name="name"
               className="input"
               placeholder="Name"
+              required
             />
             {/* photo url */}
             <label className="label">Photo URL</label>
@@ -108,13 +132,13 @@ const SignUp = () => {
               className="input"
               placeholder="Photo URL"
             />
-            {/* Contract */}
-            <label className="label">Contract</label>
+            {/* contact */}
+            <label className="label">Contact</label>
             <input
               type="text"
               name="contact"
               className="input"
-              placeholder="Contract Number"
+              placeholder="Contact Number"
             />
             {/* email */}
             <label className="label">Email</label>
@@ -123,6 +147,7 @@ const SignUp = () => {
               name="email"
               className="input"
               placeholder="Email"
+              required
             />
             {/* password */}
             <label className="label">Password</label>
@@ -131,29 +156,34 @@ const SignUp = () => {
               name="password"
               className="input"
               placeholder="Password"
+              required
             />
             {/* Password error message */}
             {passwordError && (
               <p className="text-red-500 text-sm mt-2">{passwordError}</p>
             )}
 
-            <button className="btn btn-neutral mt-4">SignUp</button>
+            <button className="btn w-full btn-neutral mt-4" type="submit">
+              Sign Up
+            </button>
             <div>
-              <p className="link text-md link-hover">
-                Have an Account?
+              <p className="link text-md link-hover mt-2">
+                Have an Account?{" "}
                 <Link className="text-yellow-600 " to="/signin">
-                  LogIn
+                  Log In
                 </Link>
               </p>
             </div>
             <div>
-              <p className="text-2xl text-center font-bold text-cyan-400">or</p>
+              <p className="text-2xl text-center font-bold text-cyan-400 mt-2">
+                or
+              </p>
               <button
                 onClick={handleWithGoogl}
                 className="btn btn-primary w-full mt-4"
                 type="button"
               >
-                signIn with Google
+                Sign in with Google
               </button>
             </div>
           </form>

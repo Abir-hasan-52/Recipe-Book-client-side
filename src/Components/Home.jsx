@@ -3,12 +3,13 @@ import TopRecipes from "./TopRecipes";
 import Hero from "./Hero";
 import Chef from "./Chef";
 import { Typewriter } from "react-simple-typewriter";
+import About from "./About";
 
 const Home = () => {
   return (
     <div>
       <section className="my-4">
-        <h1 className="text-5xl text-center font-bold">
+        <h1 className="text-5xl  text-cyan-600 text-center font-bold">
           <Typewriter
             words={["Welcome to Recipe World"]}
             loop={1}
@@ -25,17 +26,19 @@ const Home = () => {
         <Hero />
       </section>
       <section>
-        <h2 className="text-4xl text-center font-bold">Top Recipes</h2>
-        <p className="text-center text-gray-400 py-5">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum dolorem
-          reprehenderit pariatur quia voluptas laudantium at quos est, quod
-          placeat, dolor consectetur amet, cum facere labore doloribus.
-          Repudiandae, dolorem suscipit.
-        </p>
+        <h1 className="text-5xl font-bold text-center mb-4 text-cyan-600">
+          Top Recipes 
+      </h1>
+      <hr className="border-2 border-cyan-400 w-32 mx-auto mb-10" />
+        <p className="text-center text-gray-500 mb-8">
+          Explore the most popular recipes shared by our community today.</p>
         <TopRecipes />
       </section>
       <section>
         <Chef />
+      </section>
+      <section>
+        <About></About>
       </section>
     </div>
   );
