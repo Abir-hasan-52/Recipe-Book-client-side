@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const About = () => {
+  const [showContact, setShowContact] = useState(false);
+
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
       <h1 className="text-5xl font-bold text-center mb-4 text-cyan-600">
@@ -28,7 +30,23 @@ const About = () => {
 
       <div className="mt-10 text-center">
         <h2 className="text-2xl font-semibold text-cyan-500">Have Questions?</h2>
-        <p className="text-md text-gray-600">Feel free to <span className="underline text-blue-500 cursor-pointer">contact us</span> anytime.</p>
+        <p className="text-md text-gray-600">
+          Feel free to{" "}
+          <span
+            className="underline text-blue-500 cursor-pointer"
+            onClick={() => setShowContact((prev) => !prev)}
+          >
+            contact us
+          </span>{" "}
+          anytime.
+        </p>
+        {showContact && (
+          <div className="mt-4 bg-cyan-50 p-4 rounded-lg shadow inline-block">
+            <p className="font-semibold text-cyan-700">Email: support@recipebook.com</p>
+            <p className="font-semibold text-cyan-700">Phone: +880 1639448792</p>
+            <p className="font-semibold text-cyan-700">Address: 123 Recipe Street, Dhaka, Bangladesh</p>
+          </div>
+        )}
       </div>
     </div>
   );
