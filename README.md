@@ -27,7 +27,7 @@ A user-friendly recipe management application that allows users to add, discover
 ## 📸 Screenshots
 
 ![Homepage](https://i.ibb.co/FLQr8mvz/recipe-book-app-62bc2-web-app-1.png)
-*Add more screenshots to showcase your UI/UX.*
+ 
 
 ---
 
@@ -75,7 +75,7 @@ A user-friendly recipe management application that allows users to add, discover
 1. Clone the repo:
 
    ```bash
-   git clone https://github.com/yourusername/recipe-book-client.git
+   git clone https://github.com/Abir-hasan-52/recipe-book-client.git
    ```
 
 2. Navigate to the project folder:
@@ -127,16 +127,3 @@ A user-friendly recipe management application that allows users to add, discover
 
 ---
 
-# 📝 Notes
-
-* Make sure to replace placeholders (`yourusername`, `your-live-site-link.com`, etc.) with your actual details.
-* Add real screenshots in the `screenshots/` folder and update the markdown image links.
-* You can also add badges (build status, license) if needed.
-
----
-
-If you want, I can help you generate the **server-side README** similarly, so your full project looks professional and consistent.
-
----
-
-Would you like me to create that too?
