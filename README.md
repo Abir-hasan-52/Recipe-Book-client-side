@@ -26,7 +26,7 @@ A user-friendly recipe management application that allows users to add, discover
 
 ## 📸 Screenshots
 
-![Homepage](./screenshots/homepage.png)
+![Homepage](https://i.ibb.co.com/FLQr8mvz/recipe-book-app-62bc2-web-app-1.png)
 *Add more screenshots to showcase your UI/UX.*
 
 ---
