@@ -3,9 +3,12 @@ import { AuthContext } from '../Contexts/AuthContext';
 import { Navigate, useLocation } from 'react-router';
 
 const PrivateRoute = ({children}) => {
-    const { user,  } = use(AuthContext);
+    const { user,loading  } = use(AuthContext);
     const location = useLocation();
-    console.log(location.pathname);
+    // console.log(location.pathname);
+    if(loading){
+        return <span className="loading loading-bars loading-xl"></span>
+    }
     if(!user){
        return <Navigate to="/signin" state={location.pathname}></Navigate>
     }

@@ -18,7 +18,7 @@ const AddRecipe = () => {
     
     newRecipe.ownerId = user?.uid;
 
-    fetch("http://localhost:3000/recipes", {
+    fetch("https://recipe-book-server-sooty.vercel.app/recipes", {
       method: "POST",
       headers: {
         "content-type": "application/json",

@@ -9,7 +9,7 @@ const Signin = () => {
   const { signIn, signInWithGoogle } = use(AuthContext);
   const location =useLocation();
   const navigate= useNavigate();
-  console.log(location);
+  // console.log(location);
 
 
   const from = location.state || '/';
@@ -18,10 +18,10 @@ const Signin = () => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(email, password);
+    // console.log(email, password);
     signIn(email, password)
       .then((result) => {
-        console.log(result.user);
+        // console.log(result.user);
         Swal.fire({
           position: "top-end",
           icon: "success",

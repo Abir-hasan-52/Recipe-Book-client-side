@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 const MyRecipeCard = ({ recipe,setRecipes,recipes }) => {
   const [likeCount, setLikeCount] = useState(recipe.likeCount || 0);
   const [myRecipes, setMyRecipes]=useState([]);
-  fetch("http://localhost:3000/recipes/myRecipe")
+  fetch("https://recipe-book-server-sooty.vercel.app/recipes/myRecipe")
     .then((res) => res.json())
     .then((data) => {
       setMyRecipes(data);
@@ -13,7 +13,7 @@ const MyRecipeCard = ({ recipe,setRecipes,recipes }) => {
   const { _id, image, title, cuisine, time, ingredients, instructions } =
     recipe;
   const handleDelete = (_id) => {
-    console.log(_id);
+    // console.log(_id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -23,10 +23,10 @@ const MyRecipeCard = ({ recipe,setRecipes,recipes }) => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
-      console.log(result.isConfirmed);
+      // console.log(result.isConfirmed);
       if (result.isConfirmed) {
         // start deleting recipe
-        fetch(`http://localhost:3000/recipes/${_id}`, {
+        fetch(`https://recipe-book-server-sooty.vercel.app/recipes/${_id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())

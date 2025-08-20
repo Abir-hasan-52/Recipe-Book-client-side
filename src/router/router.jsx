@@ -12,6 +12,7 @@ import SignUp from "../Components/SignUp";
 import RecipeDetails from "../Components/RecipeDetails";
 import ErrorPage from "../Components/ErrorPage";
 import PrivateRoute from "../routes/PrivateRoute";
+import SavedRecipes from "../Pages/SavedRecipes/SavedRecipes";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +29,7 @@ const router = createBrowserRouter([
       },
       {
         path: "addRecipe",
-        loader: () => fetch("http://localhost:3000/recipes"),
+        loader: () => fetch("https://recipe-book-server-sooty.vercel.app/recipes"),
          element: <PrivateRoute>
           <AddRecipe />
          </PrivateRoute>,
@@ -36,33 +37,37 @@ const router = createBrowserRouter([
       {
         path: "updateRecipe/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/recipes/${params.id}`),
+          fetch(`https://recipe-book-server-sooty.vercel.app/recipes/${params.id}`),
         Component: UpdateRecipe,
       },
       {
         path: "MyRecipes",
-        loader: () => fetch("http://localhost:3000/recipes/myRecipe"),
+        loader: () => fetch("https://recipe-book-server-sooty.vercel.app/recipes/myRecipe"),
         element:  <PrivateRoute>
           <MyRecipes />
         </PrivateRoute>,
       },
       {
         path: "topRecipes",
-        loader: () => fetch("http://localhost:3000/recipes/top"),
+        loader: () => fetch("https://recipe-book-server-sooty.vercel.app/recipes/top"),
         Component: TopRecipes,
       },
       {
         path: "AllRecipes",
-        loader: () => fetch("http://localhost:3000/recipes/AllRecipes"),
+        // loader: () => fetch("https://recipe-book-server-sooty.vercel.app/recipes/AllRecipes"),
         Component: AllRecipes,
       },
       {
         path: "AllRecipes/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/recipes/AllRecipes/${params.id}`),
+          fetch(`https://recipe-book-server-sooty.vercel.app/recipes/AllRecipes/${params.id}`),
         element:<PrivateRoute>
           <RecipeDetails />
         </PrivateRoute> ,
+      },
+      {
+        path:"savedRecipes:id",
+        element:<SavedRecipes/>
       },
       {
         path: "signin",

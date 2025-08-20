@@ -4,6 +4,7 @@ import Hero from "./Hero";
 import Chef from "./Chef";
 import { Typewriter } from "react-simple-typewriter";
 import About from "./About";
+import Banner from "../Pages/Home/Banner";
 
 const Home = () => {
   return (
@@ -23,7 +24,8 @@ const Home = () => {
         <p className="text-center mt-8 text-gray-500 pb-5">
           Discover, create, and share your favorite recipes with the world.
         </p>
-        <Hero />
+        {/* <Hero /> */}
+        <Banner/>
       </section>
       <section>
         <h1 className="text-5xl font-bold text-center mb-4 text-cyan-600">

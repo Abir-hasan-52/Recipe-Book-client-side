@@ -5,7 +5,7 @@ import MyRecipeCard from './MyRecipeCard';
 const MyRecipes = () => {
     const initialRecipes=useLoaderData();
     const [recipes,setRecipes]=useState(initialRecipes)
-    console.log(initialRecipes)
+    // console.log(initialRecipes)
   return (
         <div>
              <div className='my-12'>

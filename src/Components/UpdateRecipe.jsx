@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 
 const UpdateRecipe = () => {
   const recipe = useLoaderData();
-  console.log(recipe);
+  // console.log(recipe);
   const {
     _id,
     image,
@@ -19,10 +19,10 @@ const UpdateRecipe = () => {
     const form = e.target;
     const formData = new FormData(form);
     const updatedRecipe = Object.fromEntries(formData.entries());
-    console.log(updatedRecipe);
+    // console.log(updatedRecipe);
     // send updated recipe to the DB
 
-    fetch(`http://localhost:3000/recipes/${_id}`, {
+    fetch(`https://recipe-book-server-sooty.vercel.app/recipes/${_id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",

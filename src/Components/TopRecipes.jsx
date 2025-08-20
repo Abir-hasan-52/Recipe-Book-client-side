@@ -3,7 +3,7 @@ import { Link } from "react-router";
 
 const TopRecipes = () => {
     const [topRecipes, setTopRecipes]=useState([]);
-  fetch("http://localhost:3000/recipes/top")
+  fetch("https://recipe-book-server-sooty.vercel.app/recipes/top")
     .then((res) => res.json())
     .then((data) => {
       setTopRecipes(data);

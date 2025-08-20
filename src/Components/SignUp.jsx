@@ -12,7 +12,7 @@ const SignUp = () => {
   const [passwordError, setPasswordError] = useState("");
    const location =useLocation();
     const navigate= useNavigate();
-    console.log(location);
+    // console.log(location);
   
   
     const from = location.state || '/';
@@ -62,7 +62,7 @@ const SignUp = () => {
               lastSignInTime: createdUser.metadata?.lastSignInTime,
             };
 
-            fetch("http://localhost:3000/users", {
+            fetch("https://recipe-book-server-sooty.vercel.app/users", {
               method: "POST",
               headers: {
                 "content-type": "application/json",
@@ -105,7 +105,7 @@ const SignUp = () => {
         navigate("/");
       })
       .catch((error) => {
-        console.error("Google SignIn error:", error);
+        // console.error("Google SignIn error:", error);
       });
   };
 

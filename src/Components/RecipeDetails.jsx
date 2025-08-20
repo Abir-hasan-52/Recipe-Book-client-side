@@ -45,7 +45,7 @@ const RecipeDetails = () => {
     if (isOwnRecipe) return;
     // Optional: Backend update
     setLikes((prev) => prev + 1);
-    // await fetch(`http://localhost:3000/recipes/${_id}/like`, { method: "PUT" });
+    // await fetch(`https://recipe-book-server-sooty.vercel.app/recipes/${_id}/like`, { method: "PUT" });
   };
 
   return (

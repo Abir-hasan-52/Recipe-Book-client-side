@@ -5,13 +5,14 @@ import {
   FaEnvelope,
 } from "react-icons/fa";
 import logo from '../assets/logo-transparent.png'
+import Logo from "../Shared/Logo";
 const Footer = () => {
   return (
     <footer className="bg-base-200 text-base-content py-10 px-5 mt-10">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Website Name and Copyright */}
         <div>
-          <h2 className="text-2xl font-bold mb-2 flex items-center"><img className="w-[80px] rounded-2xl" src={logo} alt="" /> Recipe Book</h2>
+          <Logo/>
           <p>© {new Date().getFullYear()} Recipe Book. All rights reserved.</p>
         </div>
 

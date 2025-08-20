@@ -3,6 +3,8 @@ import logo from "../assets/logo-transparent.png";
 import { Link, NavLink } from "react-router"; // fixed import
 import { MdNightlight } from "react-icons/md";
 import { AuthContext } from "../Contexts/AuthContext";
+import Swal from "sweetalert2";
+import Logo from "../Shared/Logo";
 
 const Navbar = () => {
   const [theme, setTheme] = useState("light");
@@ -19,10 +21,16 @@ const Navbar = () => {
   const handleSignOut = () => {
     signOutUser()
       .then(() => {
-        console.log("User signed out successfully");
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "User signed out successfully",
+          showConfirmButton: false,
+          timer: 1500
+        });
       })
       .catch((error) => {
-        console.error("Error signing out:", error);
+        // console.error("Error signing out:", error);
       });
   };
 
@@ -44,7 +52,7 @@ const Navbar = () => {
           isActive ? "text-blue-500 font-bold" : "text-gray-700"
         }
       >
-        ALL- Recipe
+        All Recipe
       </NavLink>
     </li>,
     <li key="add">
@@ -65,6 +73,16 @@ const Navbar = () => {
         }
       >
         My Recipes
+      </NavLink>
+    </li>,
+    <li key="my">
+      <NavLink
+        to="/savedRecipes:id"
+        className={({ isActive }) =>
+          isActive ? "text-blue-500 font-bold" : "text-gray-700"
+        }
+      >
+        savedRecipes
       </NavLink>
     </li>,
   ];
@@ -100,10 +118,9 @@ const Navbar = () => {
               {links}
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl">
-            <img className="w-20 hidden lg:flex" src={logo} alt="" /> Recipe
-            Book
-          </a>
+           <div>
+            <Logo/>
+           </div>
         </div>
 
         <div className="navbar-center hidden lg:flex">

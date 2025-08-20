@@ -12,7 +12,7 @@ const About = () => {
 
       <div className="text-lg leading-relaxed text-gray-700 space-y-6">
         <p>
-          Welcome to <span className="font-semibold text-cyan-600">FoodFusion</span> – your ultimate destination for discovering and sharing the most delicious recipes from around the world. Whether you're a seasoned chef or a kitchen newbie, we have something for everyone!
+          Welcome to <span className="font-semibold text-cyan-600">RecipeBook</span> – your ultimate destination for discovering and sharing the most delicious recipes from around the world. Whether you're a seasoned chef or a kitchen newbie, we have something for everyone!
         </p>
 
         <p>
